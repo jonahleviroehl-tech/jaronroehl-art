@@ -46,7 +46,7 @@ const artworksByYear = years.map((year) => ({
           <h2 class="font-[Cormorant_Garamond] text-6xl md:text-8xl lg:text-9xl font-light tracking-tighter text-[--color-text] leading-none">
             {group.year}
           </h2>
-          <span class="text-xs tracking-widest uppercase text-[--color-text-muted]">
+          <span class="year-count text-xs tracking-widest uppercase text-[--color-text-muted]">
             {group.works.length} {group.works.length === 1 ? 'Werk' : 'Werke'}
           </span>
         </div>
@@ -163,10 +163,13 @@ const artworksByYear = years.map((year) => ({
             }
           });
 
-          // Hide year groups that have no visible cards
+          // Hide year groups with no visible cards, update work counts
           yearGroups.forEach((group) => {
             const visibleCards = group.querySelectorAll('.artwork-card:not([style*="display: none"])');
-            (group as HTMLElement).style.display = visibleCards.length > 0 ? '' : 'none';
+            const count = visibleCards.length;
+            (group as HTMLElement).style.display = count > 0 ? '' : 'none';
+            const countEl = group.querySelector('.year-count');
+            if (countEl) countEl.textContent = `${count} ${count === 1 ? 'Werk' : 'Werke'}`;
           });
         });
       });
