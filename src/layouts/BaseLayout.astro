@@ -116,6 +116,9 @@ const socialImage = ogImage ? new URL(ogImage, Astro.site).href : new URL('/imag
             start: 'top 88%',
             once: true,
           });
+
+          // Catch elements already in viewport on load (e.g. after view transition)
+          ScrollTrigger.refresh();
         }
 
         // Hero parallax
@@ -138,6 +141,16 @@ const socialImage = ogImage ? new URL(ogImage, Astro.site).href : new URL('/imag
       document.addEventListener('astro:after-swap', () => {
         requestAnimationFrame(initAnimations);
       });
+
+      // Safety: if any [data-reveal] is still invisible after 2s, force show
+      setTimeout(() => {
+        document.querySelectorAll('[data-reveal]').forEach((el) => {
+          if (getComputedStyle(el).opacity === '0') {
+            (el as HTMLElement).style.opacity = '1';
+            (el as HTMLElement).style.transform = 'none';
+          }
+        });
+      }, 2000);
     </script>
   </body>
 </html>
