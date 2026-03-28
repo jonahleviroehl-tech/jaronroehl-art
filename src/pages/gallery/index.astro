@@ -231,7 +231,11 @@ const artworksByYear = years.map((year) => ({
       };
 
       cards.forEach((card) => {
-        card.addEventListener('click', () => openArtwork(card));
+        card.addEventListener('click', (e) => {
+          // Let clicks on the title link navigate to the detail page
+          if ((e.target as HTMLElement).closest('a')) return;
+          openArtwork(card);
+        });
         card.addEventListener('keydown', (e) => {
           if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
             e.preventDefault();
