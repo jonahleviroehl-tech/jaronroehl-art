@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import artworks from '../data/artworks.json';
+
+const heroArtwork = artworks.find((a) => a.hero);
+const featuredArtworks = artworks.filter((a) => a.featured && !a.hero);
+---
+
+<BaseLayout title="Home">
+  <!-- Hero — the full painting scrolls naturally, content overlaid -->
+  {heroArtwork && (
+    <section class="relative">
+      <!-- The painting at its natural aspect ratio, full width -->
+      <img
+        src={`/images/${heroArtwork.folder}/${heroArtwork.images[0]}`}
+        alt="Artwork"
+        class="w-full h-auto block"
+        loading="eager"
+        decoding="async"
+      />
+
+      <!-- Title overlaid at the top of the painting -->
+      <div class="absolute inset-0 flex flex-col items-center justify-start pt-28 md:pt-36">
+        <div data-reveal>
+          <h1 class="text-5xl md:text-7xl lg:text-9xl font-light tracking-tighter text-white mix-blend-difference text-center">
+            Jaron Röhl
+          </h1>
+          <p class="mt-3 text-sm md:text-base tracking-[0.3em] uppercase text-white/70 mix-blend-difference font-light text-center">
+            Fine Art
+          </p>
+        </div>
+      </div>
+
+      <!-- Quote overlaid at the bottom of the painting -->
+      <div class="absolute inset-x-0 bottom-0 pb-12 md:pb-20">
+        <div class="max-w-[800px] mx-auto px-6 md:px-10" data-reveal>
+          <p class="font-[Cormorant_Garamond] text-xl md:text-2xl lg:text-3xl font-light leading-relaxed text-center text-white mix-blend-difference">
+            Kunst als stille Beobachtung — zwischen Realismus und dem Surrealen,
+            entstehen Werke, die zum Verweilen einladen.
+          </p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Featured Works -->
+  <section class="bg-[--color-bg] pt-20 md:pt-32 pb-24 md:pb-40">
+    <div class="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div class="flex items-center justify-between mb-12" data-reveal>
+        <h2 class="text-3xl md:text-4xl font-light">Ausgewählte Werke</h2>
+        <a
+          href="/gallery"
+          class="text-sm tracking-wide text-[--color-text-muted] hover:text-[--color-text] transition-colors duration-300 border-b border-[--color-border] pb-0.5"
+        >
+          Alle Werke
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        {featuredArtworks.map((artwork) => (
+          <a
+            href="/gallery"
+            class="group block"
+            data-reveal
+          >
+            <div class="overflow-hidden">
+              <img
+                src={`/images/${artwork.folder}/${artwork.images[0]}`}
+                alt="Artwork"
+                class="w-full h-auto object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

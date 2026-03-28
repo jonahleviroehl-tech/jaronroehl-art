@@ -1,0 +1,35 @@
+[
+  {
+    "id": "mann-von-stuhl",
+    "category": "Ölgemälde",
+    "medium": "Öl auf Leinwand",
+    "dimensions": "90 x 130 cm",
+    "folder": "MannvonStuhl",
+    "images": ["A6703562.JPG", "A6703541.jpg", "A6703553.JPG", "A6703548.JPG", "A6703545.JPG", "A6703566.JPG"],
+    "description": "",
+    "featured": true,
+    "hero": true
+  },
+  {
+    "id": "koch",
+    "category": "Ölgemälde",
+    "medium": "Öl auf Leinwand",
+    "dimensions": "",
+    "folder": "Koch",
+    "images": ["A6703716.JPG"],
+    "description": "",
+    "featured": true,
+    "hero": false
+  },
+  {
+    "id": "fischtube",
+    "category": "Ölgemälde",
+    "medium": "Öl auf Leinwand",
+    "dimensions": "",
+    "folder": "Fischtube",
+    "images": ["A6702710.JPG"],
+    "description": "",
+    "featured": true,
+    "hero": false
+  }
+]

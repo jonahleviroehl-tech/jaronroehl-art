@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const artworkParam = Astro.url.searchParams.get('artwork');
+---
+
+<BaseLayout title="Kontakt" description="Kontaktieren Sie Jaron Röhl für Anfragen, Aufträge und Fragen">
+  <section class="pt-32 pb-24 md:pt-40 md:pb-40 max-w-[1400px] mx-auto px-6 md:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
+      <!-- Left: Info -->
+      <div class="md:col-span-5">
+        <h1
+          class="text-4xl md:text-6xl lg:text-7xl font-light tracking-tighter mb-8"
+          data-reveal
+        >
+          Kontakt
+        </h1>
+
+        <div class="space-y-6 text-[--color-text-muted]" data-reveal>
+          <p class="leading-relaxed">
+            Haben Sie Interesse an einem Werk, möchten eine Auftragsarbeit
+            besprechen oder haben eine allgemeine Frage? Ich freue mich
+            über Ihre Nachricht.
+          </p>
+
+          <div class="border-t border-[--color-border] pt-6 space-y-3">
+            <p class="text-[--color-text]">
+              <a href="mailto:jaron.roehl@icloud.com" class="hover:opacity-60 transition-opacity duration-300">
+                jaron.roehl@icloud.com
+              </a>
+            </p>
+            <p>
+              <a
+                href="https://www.instagram.com/jari_art_/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-[--color-text] hover:opacity-60 transition-opacity duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+                @jari_art_
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="md:col-span-6 md:col-start-7" data-reveal>
+        <form
+          action="https://formspree.io/f/xykbkvla"
+          method="POST"
+          class="space-y-6"
+        >
+          <input type="hidden" name="_to" value="jaron.roehl@icloud.com" />
+
+          <div>
+            <label for="name" class="block text-sm mb-2">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              class="w-full bg-transparent border-b border-[--color-border] py-3 text-[--color-text] focus:border-[--color-text] focus:outline-none transition-colors duration-300 placeholder:text-[--color-text-muted]/40"
+              placeholder="Ihr Name"
+            />
+          </div>
+
+          <div>
+            <label for="email" class="block text-sm mb-2">E-Mail</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              class="w-full bg-transparent border-b border-[--color-border] py-3 text-[--color-text] focus:border-[--color-text] focus:outline-none transition-colors duration-300 placeholder:text-[--color-text-muted]/40"
+              placeholder="ihre@email.de"
+            />
+          </div>
+
+          <div>
+            <label for="subject" class="block text-sm mb-2">Betreff</label>
+            <select
+              id="subject"
+              name="subject"
+              required
+              class="w-full bg-transparent border-b border-[--color-border] py-3 text-[--color-text] focus:border-[--color-text] focus:outline-none transition-colors duration-300 appearance-none cursor-pointer"
+            >
+              <option value="" disabled selected={!artworkParam}>Bitte wählen</option>
+              <option value="purchase" selected={!!artworkParam}>Kaufanfrage</option>
+              <option value="commission">Auftragsarbeit</option>
+              <option value="general">Allgemeine Anfrage</option>
+            </select>
+          </div>
+
+          {artworkParam && (
+            <input type="hidden" name="artwork_id" value={artworkParam} />
+          )}
+
+          <div>
+            <label for="message" class="block text-sm mb-2">Nachricht</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              class="w-full bg-transparent border-b border-[--color-border] py-3 text-[--color-text] focus:border-[--color-text] focus:outline-none transition-colors duration-300 resize-none placeholder:text-[--color-text-muted]/40"
+              placeholder={artworkParam ? `Ich interessiere mich für das Werk "${artworkParam}"...` : 'Ihre Nachricht...'}
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="inline-block text-sm tracking-wide border border-[--color-text] px-8 py-4 hover:bg-[--color-text] hover:text-[--color-bg] transition-all duration-300 active:scale-[0.98] mt-4"
+          >
+            Nachricht senden
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

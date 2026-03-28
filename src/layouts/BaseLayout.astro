@@ -1,0 +1,95 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Fine Art Portfolio — Ölmalerei, Portraits, Zeichnungen' } = Astro.props;
+const fullTitle = title === 'Home' ? 'Jaron Röhl — Fine Art' : `${title} — Jaron Röhl`;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+    <ClientRouter />
+  </head>
+  <body class="bg-[--color-bg] text-[--color-text] min-h-[100dvh]">
+    <Navigation />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function initAnimations() {
+        ScrollTrigger.getAll().forEach((t) => t.kill());
+
+        if (prefersReducedMotion) {
+          document.querySelectorAll('[data-reveal]').forEach((el) => {
+            (el as HTMLElement).style.opacity = '1';
+            (el as HTMLElement).style.transform = 'none';
+          });
+          return;
+        }
+
+        // Reveal animations for [data-reveal] elements
+        const reveals = document.querySelectorAll('[data-reveal]');
+        if (reveals.length) {
+          gsap.set(reveals, { opacity: 0, y: 30 });
+
+          ScrollTrigger.batch(reveals, {
+            onEnter: (batch) => {
+              gsap.to(batch, {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power2.out',
+                stagger: 0.12,
+              });
+            },
+            start: 'top 88%',
+            once: true,
+          });
+        }
+
+        // Hero parallax
+        const heroImg = document.querySelector('[data-parallax]');
+        if (heroImg) {
+          gsap.to(heroImg, {
+            yPercent: 15,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: heroImg.closest('section') || heroImg,
+              start: 'top top',
+              end: 'bottom top',
+              scrub: 0.6,
+            },
+          });
+        }
+      }
+
+      initAnimations();
+      document.addEventListener('astro:after-swap', () => {
+        requestAnimationFrame(initAnimations);
+      });
+    </script>
+  </body>
+</html>
