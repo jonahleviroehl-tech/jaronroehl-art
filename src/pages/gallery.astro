@@ -49,7 +49,7 @@ const allCategories = ['Ölgemälde', 'Zeichnungen'];
           <div class="overflow-hidden">
             <img
               src={`/images/${artwork.folder}/${artwork.images[0]}`}
-              alt={artwork.medium}
+              alt={`${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
               class="artwork-thumb w-full h-auto object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
               loading="lazy"
               decoding="async"
@@ -154,7 +154,8 @@ const allCategories = ['Ölgemälde', 'Zeichnungen'];
         if (!artwork) return;
 
         // Main image (first image, displayed large)
-        overlayMainImage.innerHTML = `<img src="/images/${artwork.folder}/${artwork.images[0]}" alt="${artwork.medium}" class="overlay-img w-full h-auto" loading="eager" decoding="async" />`;
+        const altText = `${artwork.medium}${artwork.dimensions ? ', ' + artwork.dimensions : ''} von Jaron Röhl`;
+        overlayMainImage.innerHTML = `<img src="/images/${artwork.folder}/${artwork.images[0]}" alt="${altText}" class="overlay-img w-full h-auto" loading="eager" decoding="async" />`;
 
         // Detail images (remaining images, displayed small in a grid)
         if (artwork.images.length > 1) {
@@ -162,7 +163,7 @@ const allCategories = ['Ölgemälde', 'Zeichnungen'];
             .slice(1)
             .map(
               (img) =>
-                `<img src="/images/${artwork.folder}/${img}" alt="Detail" class="overlay-img w-full h-auto object-cover aspect-square cursor-pointer hover:opacity-80 transition-opacity duration-300" loading="lazy" decoding="async" data-full-src="/images/${artwork.folder}/${img}" />`
+                `<img src="/images/${artwork.folder}/${img}" alt="${altText} — Detailansicht" class="overlay-img w-full h-auto object-cover aspect-square cursor-pointer hover:opacity-80 transition-opacity duration-300" loading="lazy" decoding="async" data-full-src="/images/${artwork.folder}/${img}" />`
             )
             .join('');
           overlayDetailImages.style.display = '';

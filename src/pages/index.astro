@@ -13,7 +13,7 @@ const featuredArtworks = artworks.filter((a) => a.featured && !a.hero);
       <!-- The painting at its natural aspect ratio, full width -->
       <img
         src={`/images/${heroArtwork.folder}/${heroArtwork.images[0]}`}
-        alt="Artwork"
+        alt={`${heroArtwork.medium}${heroArtwork.dimensions ? `, ${heroArtwork.dimensions}` : ''} von Jaron Röhl`}
         class="w-full h-auto block"
         loading="eager"
         decoding="async"
@@ -66,7 +66,7 @@ const featuredArtworks = artworks.filter((a) => a.featured && !a.hero);
             <div class="overflow-hidden">
               <img
                 src={`/images/${artwork.folder}/${artwork.images[0]}`}
-                alt="Artwork"
+                alt={`${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
                 class="w-full h-auto object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
                 loading="lazy"
                 decoding="async"

@@ -7,10 +7,13 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'Fine Art Portfolio — Ölmalerei, Portraits, Zeichnungen' } = Astro.props;
+const { title, description = 'Fine Art Portfolio — Ölmalerei, Portraits, Zeichnungen', ogImage } = Astro.props;
 const fullTitle = title === 'Home' ? 'Jaron Röhl — Fine Art' : `${title} — Jaron Röhl`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = ogImage ? new URL(ogImage, Astro.site).href : new URL('/images/MannvonStuhl/A6703562.JPG', Astro.site).href;
 ---
 
 <!doctype html>
@@ -19,11 +22,55 @@ const fullTitle = title === 'Home' ? 'Jaron Röhl — Fine Art' : `${title} — 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#FAFAF8" />
     <meta name="google-site-verification" content="tHsbic27A9L2tk8HTwiFXdCvqN2cmd80T7FZaJr-bJ0" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL.href} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL.href} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content="Jaron Röhl — Fine Art" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v16/co3YmX5slCNuHLi8bLeY9MK7whWMhyjQEl5fsQ.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="https://cdn.fontshare.com/wf/CJTMFOYV5OWXMSDWKPAQBEFOW36BSFX5/HUPPMVYRVST7BNGTMVWQHRVYDUQFNWSH/KBBULDFBFAMYRQNLGBMHPB6SUQAYB73G.woff2" as="font" type="font/woff2" crossorigin />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{fullTitle}</title>
     <ClientRouter />
+
+    <!-- Structured Data: Artist -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Jaron Röhl",
+      "url": "https://jaronroehl-art.de",
+      "image": socialImage,
+      "jobTitle": "Bildender Künstler",
+      "description": "Junger Künstler aus Lübeck — Ölmalerei, Portraits, Zeichnungen und Fotografie",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lübeck",
+        "addressCountry": "DE"
+      },
+      "email": "jaron.roehl@icloud.com",
+      "sameAs": [
+        "https://www.instagram.com/jari_art_/"
+      ]
+    })} />
   </head>
   <body class="bg-[--color-bg] text-[--color-text] min-h-[100dvh]">
     <Navigation />
