@@ -6,7 +6,7 @@ const heroArtwork = artworks.find((a) => a.hero);
 const featuredArtworks = artworks.filter((a) => a.featured && !a.hero);
 ---
 
-<BaseLayout title="Home">
+<BaseLayout title="Home" description="Jaron Röhl — Bildender Künstler aus Lübeck. Ölmalerei, Portraits und Zeichnungen. Originale kaufen und Auftragsarbeiten anfragen.">
   <!-- Hero — the full painting scrolls naturally, content overlaid -->
   {heroArtwork && (
     <section class="relative">
@@ -59,7 +59,7 @@ const featuredArtworks = artworks.filter((a) => a.featured && !a.hero);
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         {featuredArtworks.map((artwork) => (
           <a
-            href="/gallery"
+            href={`/gallery/${artwork.id}`}
             class="group block"
             data-reveal
           >

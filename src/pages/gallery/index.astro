@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import artworks from '../data/artworks.json';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import artworks from '../../data/artworks.json';
 
 const allCategories = ['Ölgemälde', 'Zeichnungen', 'Aquarell'];
 
@@ -73,9 +73,9 @@ const artworksByYear = years.map((year) => ({
                 />
               </div>
               {artwork.title && (
-                <p class="mt-3 text-sm font-[Cormorant_Garamond] text-[--color-text] tracking-wide">
+                <a href={`/gallery/${artwork.id}`} class="mt-3 text-sm font-[Cormorant_Garamond] text-[--color-text] tracking-wide block hover:opacity-70 transition-opacity duration-300">
                   {artwork.title}
-                </p>
+                </a>
               )}
               <p class="mt-1 text-xs text-[--color-text-muted] tracking-wide">
                 {artwork.medium}{artwork.dimensions ? ` — ${artwork.dimensions}` : ''}
@@ -125,7 +125,7 @@ const artworksByYear = years.map((year) => ({
 
   <script>
     import { gsap } from 'gsap';
-    import artworks from '../data/artworks.json';
+    import artworks from '../../data/artworks.json';
 
     function initGallery() {
       const overlay = document.getElementById('artwork-overlay');

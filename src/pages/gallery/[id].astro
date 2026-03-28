@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import artworks from '../../data/artworks.json';
+
+export function getStaticPaths() {
+  return artworks.map((artwork) => ({
+    params: { id: artwork.id },
+    props: { artwork },
+  }));
+}
+
+const { artwork } = Astro.props;
+
+const description = artwork.description
+  ? artwork.description
+  : `${artwork.title} — ${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl, Künstler aus Lübeck`;
+
+const breadcrumbs = [
+  { name: 'Startseite', url: 'https://jaronroehl-art.de/' },
+  { name: 'Galerie', url: 'https://jaronroehl-art.de/gallery' },
+  { name: artwork.title, url: `https://jaronroehl-art.de/gallery/${artwork.id}` },
+];
+
+const artworkSurface = artwork.medium.includes('Leinwand')
+  ? 'Leinwand'
+  : artwork.medium.includes('Holz')
+    ? 'Holz'
+    : artwork.medium.includes('Papier')
+      ? 'Papier'
+      : undefined;
+
+const [widthStr, heightStr] = artwork.dimensions
+  ? artwork.dimensions.split(' x ').map((d: string) => d.trim().replace(',', '.'))
+  : [undefined, undefined];
+---
+
+<BaseLayout
+  title={artwork.title}
+  description={description}
+  ogImage={`/images/${artwork.folder}/${artwork.images[0]}`}
+>
+  <!-- Structured Data: VisualArtwork -->
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "VisualArtwork",
+      "name": artwork.title,
+      "description": description,
+      "artMedium": artwork.medium,
+      ...(artworkSurface && { "artworkSurface": artworkSurface }),
+      ...(widthStr && { "width": { "@type": "Distance", "name": widthStr } }),
+      ...(heightStr && { "height": { "@type": "Distance", "name": heightStr } }),
+      "dateCreated": String(artwork.year),
+      "image": `https://jaronroehl-art.de/images/${artwork.folder}/${artwork.images[0]}`,
+      "artist": {
+        "@type": "Person",
+        "name": "Jaron Röhl",
+        "url": "https://jaronroehl-art.de"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "Jaron Röhl"
+      },
+      "url": `https://jaronroehl-art.de/gallery/${artwork.id}`
+    })} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": breadcrumbs.map((crumb, i) => ({
+        "@type": "ListItem",
+        "position": i + 1,
+        "name": crumb.name,
+        "item": crumb.url
+      }))
+    })} />
+  </Fragment>
+
+  <section class="pt-32 pb-24 md:pt-40 md:pb-40 max-w-[1000px] mx-auto px-6 md:px-10">
+    <!-- Breadcrumb Navigation -->
+    <nav class="mb-8 text-sm text-[--color-text-muted]" aria-label="Breadcrumb" data-reveal>
+      <a href="/gallery" class="hover:text-[--color-text] transition-colors duration-300">Galerie</a>
+      <span class="mx-2">/</span>
+      <span class="text-[--color-text]">{artwork.title}</span>
+    </nav>
+
+    <!-- Main Image -->
+    <div data-reveal>
+      <img
+        src={`/images/${artwork.folder}/${artwork.images[0]}`}
+        alt={`${artwork.title} — ${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
+        class="w-full h-auto"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+
+    <!-- Detail Images -->
+    {artwork.images.length > 1 && (
+      <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 mt-4" data-reveal>
+        {artwork.images.slice(1).map((img: string) => (
+          <img
+            src={`/images/${artwork.folder}/${img}`}
+            alt={`${artwork.title} — ${artwork.medium} von Jaron Röhl — Detailansicht`}
+            class="w-full h-auto object-cover aspect-square"
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </div>
+    )}
+
+    <!-- Artwork Info -->
+    <div class="mt-8 border-t border-[--color-border] pt-6" data-reveal>
+      <h1 class="font-[Cormorant_Garamond] text-3xl md:text-4xl font-light tracking-tight mb-3">
+        {artwork.title}
+      </h1>
+      <p class="text-sm text-[--color-text-muted]">
+        {artwork.medium}{artwork.dimensions ? ` — ${artwork.dimensions}` : ''} — {artwork.year}
+      </p>
+
+      {artwork.description && (
+        <p class="mt-6 text-[--color-text] leading-relaxed max-w-[55ch]">
+          {artwork.description}
+        </p>
+      )}
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-8 flex flex-col sm:flex-row gap-4" data-reveal>
+      <a
+        href={`/contact?artwork=${artwork.id}`}
+        class="inline-block text-sm tracking-wide border border-[--color-text] px-6 py-3 hover:bg-[--color-text] hover:text-[--color-bg] transition-all duration-300 text-center"
+      >
+        Werk anfragen
+      </a>
+      <a
+        href="/gallery"
+        class="inline-block text-sm tracking-wide border border-[--color-border] px-6 py-3 hover:border-[--color-text] transition-all duration-300 text-center text-[--color-text-muted] hover:text-[--color-text]"
+      >
+        Zurück zur Galerie
+      </a>
+    </div>
+  </section>
+</BaseLayout>

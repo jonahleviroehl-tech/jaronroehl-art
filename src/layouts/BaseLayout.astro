@@ -52,6 +52,13 @@ const socialImage = ogImage ? new URL(ogImage, Astro.site).href : new URL('/imag
     <title>{fullTitle}</title>
     <ClientRouter />
 
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="de" href={canonicalURL.href} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL.href} />
+
+    <!-- Page-specific head content -->
+    <slot name="head" />
+
     <!-- Structured Data: Artist -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
@@ -61,15 +68,43 @@ const socialImage = ogImage ? new URL(ogImage, Astro.site).href : new URL('/imag
       "image": socialImage,
       "jobTitle": "Bildender Künstler",
       "description": "Junger Künstler aus Lübeck — Ölmalerei, Portraits, Zeichnungen und Fotografie",
+      "knowsAbout": ["Ölmalerei", "Portraitmalerei", "Zeichnung", "Fine Art", "Aquarell"],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Lübeck",
+        "addressRegion": "Schleswig-Holstein",
         "addressCountry": "DE"
       },
       "email": "jaron.roehl@icloud.com",
       "sameAs": [
         "https://www.instagram.com/jari_art_/"
       ]
+    })} />
+
+    <!-- Structured Data: Art Studio / Local Business -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "ArtGallery",
+      "name": "Jaron Röhl — Fine Art",
+      "description": "Künstleratelier in Lübeck — Ölmalerei, Portraits, Zeichnungen und Auftragsarbeiten",
+      "url": "https://jaronroehl-art.de",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lübeck",
+        "addressRegion": "Schleswig-Holstein",
+        "addressCountry": "DE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "53.8655",
+        "longitude": "10.6866"
+      },
+      "areaServed": ["Lübeck", "Schleswig-Holstein", "Hamburg"],
+      "founder": {
+        "@type": "Person",
+        "name": "Jaron Röhl"
+      },
+      "image": socialImage
     })} />
   </head>
   <body class="bg-[--color-bg] text-[--color-text] min-h-[100dvh]">
