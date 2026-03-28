@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import artworks from '../data/artworks.json';
 
 // Always show both categories — Zeichnungen will populate as artworks are added
-const allCategories = ['Ölgemälde', 'Zeichnungen'];
+const allCategories = ['Ölgemälde', 'Zeichnungen', 'Aquarell'];
 ---
 
 <BaseLayout title="Galerie" description="Digitales Kunstportfolio — Ölmalerei, Portraits und Zeichnungen von Jaron Röhl">
@@ -49,22 +49,20 @@ const allCategories = ['Ölgemälde', 'Zeichnungen'];
           <div class="overflow-hidden">
             <img
               src={`/images/${artwork.folder}/${artwork.images[0]}`}
-              alt={`${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
+              alt={`${artwork.title} — ${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
               class="artwork-thumb w-full h-auto object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
               loading="lazy"
               decoding="async"
             />
           </div>
-          {artwork.dimensions && (
-            <p class="mt-3 text-xs text-[--color-text-muted] tracking-wide">
-              {artwork.medium} — {artwork.dimensions}
+          {artwork.title && (
+            <p class="mt-3 text-sm font-[Cormorant_Garamond] text-[--color-text] tracking-wide">
+              {artwork.title}
             </p>
           )}
-          {!artwork.dimensions && (
-            <p class="mt-3 text-xs text-[--color-text-muted] tracking-wide">
-              {artwork.medium}
-            </p>
-          )}
+          <p class="mt-1 text-xs text-[--color-text-muted] tracking-wide">
+            {artwork.medium}{artwork.dimensions ? ` — ${artwork.dimensions}` : ''}
+          </p>
         </div>
       ))}
     </div>
@@ -154,7 +152,7 @@ const allCategories = ['Ölgemälde', 'Zeichnungen'];
         if (!artwork) return;
 
         // Main image (first image, displayed large)
-        const altText = `${artwork.medium}${artwork.dimensions ? ', ' + artwork.dimensions : ''} von Jaron Röhl`;
+        const altText = `${artwork.title} — ${artwork.medium}${artwork.dimensions ? ', ' + artwork.dimensions : ''} von Jaron Röhl`;
         overlayMainImage.innerHTML = `<img src="/images/${artwork.folder}/${artwork.images[0]}" alt="${altText}" class="overlay-img w-full h-auto" loading="eager" decoding="async" />`;
 
         // Detail images (remaining images, displayed small in a grid)
@@ -187,7 +185,7 @@ const allCategories = ['Ölgemälde', 'Zeichnungen'];
         }
 
         // Meta info
-        const parts = [artwork.medium, artwork.dimensions].filter(Boolean);
+        const parts = [artwork.title, artwork.medium, artwork.dimensions, artwork.year].filter(Boolean);
         overlayMeta.textContent = parts.join(' — ');
         overlayBuy.href = `/contact?artwork=${artwork.id}`;
 
