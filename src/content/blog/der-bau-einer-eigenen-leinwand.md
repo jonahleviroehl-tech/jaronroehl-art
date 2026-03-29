@@ -18,5 +18,3 @@ Im nächsten Schritt bereite ich den Leinwandstoff vor. Dafür bügle ich ihn zu
 ## Spannung und Grundierung
 
 Nachdem der Stoff befestigt ist, befeuchte ich ihn leicht. Durch das Bewässern zieht sich das Material zusammen und wird zusätzlich gespannt. Sobald der Stoff getrocknet ist, folgt die Grundierung. Diese trage ich in zwei Schichten auf, um eine optimale Maloberfläche zu erhalten.
-
-Nach dem Trocknen ist die Leinwand fertig und bereit für die weitere künstlerische Arbeit. Der gesamte Prozess verbindet handwerkliche Präzision mit künstlerischer Vorbereitung und ist ein fester Bestandteil meiner Arbeit als Künstler.
