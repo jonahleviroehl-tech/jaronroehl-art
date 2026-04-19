@@ -119,6 +119,19 @@ const artworksByYear = years.map((year) => ({
             Werk anfragen
           </a>
         </div>
+
+        <!-- Blog-Link (only shown when artwork has a relatedBlogSlug) -->
+        <div id="overlay-blog-link" class="mt-6 pt-6 border-t border-[--color-border] hidden">
+          <p class="text-xs tracking-widest uppercase text-[--color-text-muted] mb-3">Zum Werk</p>
+          <a
+            id="overlay-blog-anchor"
+            href=""
+            class="group inline-flex items-baseline gap-3 font-[Cormorant_Garamond] text-xl md:text-2xl font-light tracking-tight text-[--color-text] hover:opacity-70 transition-opacity duration-300"
+          >
+            <span>Mehr über die Entstehung im Blog</span>
+            <span class="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -133,6 +146,8 @@ const artworksByYear = years.map((year) => ({
       const overlayDetailImages = document.getElementById('overlay-detail-images');
       const overlayMeta = document.getElementById('overlay-meta');
       const overlayBuy = document.getElementById('overlay-buy') as HTMLAnchorElement;
+      const overlayBlogLink = document.getElementById('overlay-blog-link');
+      const overlayBlogAnchor = document.getElementById('overlay-blog-anchor') as HTMLAnchorElement | null;
       const closeBtn = document.getElementById('overlay-close');
 
       if (!overlay || !overlayMainImage || !overlayDetailImages || !overlayMeta || !overlayBuy || !closeBtn) return;
@@ -217,6 +232,16 @@ const artworksByYear = years.map((year) => ({
         const parts = [artwork.title, artwork.medium, artwork.dimensions, artwork.year].filter(Boolean);
         overlayMeta.textContent = parts.join(' — ');
         overlayBuy.href = `/contact?artwork=${artwork.id}`;
+
+        const relatedBlogSlug = (artwork as { relatedBlogSlug?: string }).relatedBlogSlug;
+        if (overlayBlogLink && overlayBlogAnchor) {
+          if (relatedBlogSlug) {
+            overlayBlogAnchor.href = `/blog/${relatedBlogSlug}`;
+            overlayBlogLink.classList.remove('hidden');
+          } else {
+            overlayBlogLink.classList.add('hidden');
+          }
+        }
 
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
