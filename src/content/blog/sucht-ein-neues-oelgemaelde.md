@@ -1,5 +1,5 @@
 ---
-title: "„Sucht" — ein neues Ölgemälde"
+title: '„Sucht" — ein neues Ölgemälde'
 description: "Zwei Wochen Arbeit an einem Bild über das Greifen nach dem, was nicht guttut. Prozess, Motiv, Lichtführung."
 pubDate: 2026-04-19
 heroImage: "/images/Sucht/A6700061.JPG"
