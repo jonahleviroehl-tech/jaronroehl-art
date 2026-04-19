@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import artworks from '../../data/artworks.json';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -12,6 +13,10 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const relatedArtwork = post.data.relatedArtworkId
+  ? artworks.find((a) => a.id === post.data.relatedArtworkId)
+  : undefined;
 
 const breadcrumbs = [
   { name: 'Startseite', url: 'https://jaronroehl-art.de/' },
@@ -93,6 +98,19 @@ const breadcrumbs = [
     <div class="prose" data-reveal>
       <Content />
     </div>
+
+    {relatedArtwork && (
+      <div class="mt-12 border-t border-[--color-border] pt-8" data-reveal>
+        <p class="text-xs tracking-widest uppercase text-[--color-text-muted] mb-3">Zum Werk</p>
+        <a
+          href={`/gallery/${relatedArtwork.id}`}
+          class="group inline-flex items-baseline gap-3 font-[Cormorant_Garamond] text-xl md:text-2xl font-light tracking-tight text-[--color-text] hover:opacity-70 transition-opacity duration-300"
+        >
+          <span>{relatedArtwork.title} in der Galerie ansehen</span>
+          <span class="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+      </div>
+    )}
 
     <!-- Tags -->
     {post.data.tags.length > 0 && (

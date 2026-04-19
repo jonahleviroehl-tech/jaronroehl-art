@@ -23,12 +23,12 @@ const posts = (await getCollection('blog')).sort(
         {posts.map((post) => (
           <article class="border-t border-[--color-border] pt-8" data-reveal>
             <a href={`/blog/${post.id}`} class="group block">
-              {post.data.heroImage && (
-                <div class="overflow-hidden mb-6">
+              {(post.data.cardImage ?? post.data.heroImage) && (
+                <div class="overflow-hidden mb-6 aspect-square max-w-[360px]">
                   <img
-                    src={post.data.heroImage}
+                    src={post.data.cardImage ?? post.data.heroImage}
                     alt={post.data.title}
-                    class="w-full h-auto object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
+                    class="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.02]"
                     loading="lazy"
                     decoding="async"
                   />

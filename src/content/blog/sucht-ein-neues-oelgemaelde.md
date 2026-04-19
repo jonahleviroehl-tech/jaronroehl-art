@@ -3,10 +3,10 @@ title: '„Sucht" — ein neues Ölgemälde'
 description: "Zwei Wochen Arbeit an einem Bild über das Greifen nach dem, was nicht guttut. Prozess, Motiv, Lichtführung."
 pubDate: 2026-04-19
 heroImage: "/images/Sucht/A6700061.JPG"
+cardImage: "/images/Sucht/A6700066.JPG"
+relatedArtworkId: "sucht"
 tags: ["Ölmalerei", "Prozess", "Neues Werk"]
 ---
-
-![Sucht — Öl auf Leinwand, 80 × 60 cm, 2026](/images/Sucht/A6700061.JPG)
 
 Ich habe in den letzten zwei Wochen an einem neuen Bild gearbeitet, das ich „Sucht" genannt habe. Die Idee dahinter war dieses Gefühl, dass man nach etwas greift, obwohl man eigentlich weiß, dass es einem nicht guttut – aber es wirkt trotzdem irgendwie anziehend.
 

@@ -86,13 +86,32 @@ const [widthStr, heightStr] = artwork.dimensions
 
     <!-- Main Image -->
     <div data-reveal>
-      <img
-        src={`/images/${artwork.folder}/${artwork.images[0]}`}
-        alt={`${artwork.title} — ${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
-        class="w-full h-auto"
-        loading="eager"
-        decoding="async"
-      />
+      {artwork.relatedBlogSlug ? (
+        <a
+          href={`/blog/${artwork.relatedBlogSlug}`}
+          class="block group relative"
+          aria-label={`Blog-Beitrag zu ${artwork.title} lesen`}
+        >
+          <img
+            src={`/images/${artwork.folder}/${artwork.images[0]}`}
+            alt={`${artwork.title} — ${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
+            class="w-full h-auto transition-opacity duration-500 group-hover:opacity-90"
+            loading="eager"
+            decoding="async"
+          />
+          <span class="pointer-events-none absolute bottom-4 right-4 bg-[--color-bg]/85 backdrop-blur-sm px-4 py-2 text-xs tracking-widest uppercase text-[--color-text] opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            Zum Blog-Beitrag →
+          </span>
+        </a>
+      ) : (
+        <img
+          src={`/images/${artwork.folder}/${artwork.images[0]}`}
+          alt={`${artwork.title} — ${artwork.medium}${artwork.dimensions ? `, ${artwork.dimensions}` : ''} von Jaron Röhl`}
+          class="w-full h-auto"
+          loading="eager"
+          decoding="async"
+        />
+      )}
     </div>
 
     <!-- Detail Images -->
