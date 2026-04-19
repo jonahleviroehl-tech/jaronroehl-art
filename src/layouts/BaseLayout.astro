@@ -172,20 +172,24 @@ const socialImage = ogImage ? new URL(ogImage, Astro.site).href : new URL('/imag
         }
       }
 
+      // Safety: if any [data-reveal] is still invisible after 2s, force show
+      function scheduleRevealSafety() {
+        setTimeout(() => {
+          document.querySelectorAll('[data-reveal]').forEach((el) => {
+            if (getComputedStyle(el).opacity === '0') {
+              (el as HTMLElement).style.opacity = '1';
+              (el as HTMLElement).style.transform = 'none';
+            }
+          });
+        }, 2000);
+      }
+
       initAnimations();
+      scheduleRevealSafety();
       document.addEventListener('astro:after-swap', () => {
         requestAnimationFrame(initAnimations);
+        scheduleRevealSafety();
       });
-
-      // Safety: if any [data-reveal] is still invisible after 2s, force show
-      setTimeout(() => {
-        document.querySelectorAll('[data-reveal]').forEach((el) => {
-          if (getComputedStyle(el).opacity === '0') {
-            (el as HTMLElement).style.opacity = '1';
-            (el as HTMLElement).style.transform = 'none';
-          }
-        });
-      }, 2000);
     </script>
   </body>
 </html>
