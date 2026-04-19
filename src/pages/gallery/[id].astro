@@ -126,6 +126,19 @@ const [widthStr, heightStr] = artwork.dimensions
       )}
     </div>
 
+    {artwork.relatedBlogSlug && (
+      <div class="mt-8 border-t border-[--color-border] pt-6" data-reveal>
+        <p class="text-xs tracking-widest uppercase text-[--color-text-muted] mb-3">Zum Werk</p>
+        <a
+          href={`/blog/${artwork.relatedBlogSlug}`}
+          class="group inline-flex items-baseline gap-3 font-[Cormorant_Garamond] text-xl md:text-2xl font-light tracking-tight text-[--color-text] hover:opacity-70 transition-opacity duration-300"
+        >
+          <span>Mehr über die Entstehung im Blog</span>
+          <span class="text-sm transition-transform duration-300 group-hover:translate-x-1">→</span>
+        </a>
+      </div>
+    )}
+
     <!-- CTA -->
     <div class="mt-8 flex flex-col sm:flex-row gap-4" data-reveal>
       <a

@@ -1,5 +1,19 @@
 [
   {
+    "id": "sucht",
+    "title": "Sucht",
+    "category": "Ölgemälde",
+    "medium": "Öl auf Leinwand",
+    "dimensions": "80 x 60 cm",
+    "year": 2026,
+    "folder": "Sucht",
+    "images": ["A6700061.JPG", "A6700066.JPG", "A6700072.JPG", "A6700070.JPG"],
+    "description": "",
+    "featured": true,
+    "hero": false,
+    "relatedBlogSlug": "sucht-ein-neues-oelgemaelde"
+  },
+  {
     "id": "mann-von-stuhl",
     "title": "Der Fall vom Sessel",
     "category": "Ölgemälde",
